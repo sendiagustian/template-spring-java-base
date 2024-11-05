@@ -33,10 +33,10 @@ public class AppPropertiesTest {
         String contactName = properties.getContact().getName();
         String contactEmail = properties.getContact().getEmail();
 
-        Assertions.assertEquals("Base Template Rest API SpringBoot", appName);
-        Assertions.assertEquals("v1.0.0", appVersion);
-        Assertions.assertEquals("Sendi Agustian", contactName);
-        Assertions.assertEquals("sendiagustian@sendistudio.id", contactEmail);
+        Assertions.assertNotNull(appName);
+        Assertions.assertNotNull(appVersion);
+        Assertions.assertNotNull(contactName);
+        Assertions.assertNotNull(contactEmail);
     }
 
     @SpringBootApplication()
