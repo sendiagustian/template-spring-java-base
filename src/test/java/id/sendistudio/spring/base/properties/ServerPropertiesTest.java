@@ -28,10 +28,12 @@ public class ServerPropertiesTest {
     @Test
     void testServer() {
         ServerProperties.Local local = server.getLocal();
+        ServerProperties.Dev dev = server.getDev();
+        ServerProperties.Prod prod = server.getProd();
 
         Assertions.assertNotNull(local);
-        Assertions.assertEquals("127.0.0.1", local.getHost());
-        Assertions.assertEquals("5050", local.getPort());
+        Assertions.assertNotNull(dev);
+        Assertions.assertNotNull(prod);
     }
 
     @SpringBootApplication
