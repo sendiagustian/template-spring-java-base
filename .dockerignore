@@ -1,0 +1,39 @@
+# Ignore the Maven target directory
+target/
+
+# Ignore any build files
+build/
+
+# Ignore any logs files
+logs
+
+# Ignore IDE-specific files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Ignore dependency files
+*.jar
+*.war
+*.class
+
+# Ignore test files
+src/test/
+src/test/resources/
+
+# Ignore log files
+*.log
+
+# Ignore local configuration files
+application-dev.properties
+application-prod.properties
+application-local.properties
+*.yml
+
+# Ignore local environment files
+.env
+
+# Ignore version control files
+.git/
+.gitignore

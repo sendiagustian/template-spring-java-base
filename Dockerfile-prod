@@ -1,0 +1,23 @@
+# Build stage
+FROM eclipse-temurin:17-alpine as build
+WORKDIR /app
+
+RUN apk update && apk add maven
+
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+COPY src ./src
+
+RUN mvn install -P prod
+RUN ls -lrt /app/target/*jar | awk '{print $9}' | tail -1 | xargs -i mv {} /app/app.jar 
+RUN ls -lrt /app | grep -v ".jar" | awk '{print $9}'| xargs -i rm -rf {}
+
+# Run stage
+FROM eclipse-temurin:17-alpine
+WORKDIR /app
+
+COPY --from=build /app/app.jar /app/app.jar
+
+EXPOSE 8080
+
+CMD ["java", "-Dspring.profiles.active=prod", "-Xms128m", "-Xmx512m", "-XX:MaxMetaspaceSize=256m", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=200", "-jar", "/app/app.jar"]
