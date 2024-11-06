@@ -3,6 +3,7 @@ package id.sendistudio.spring.base.app.utils;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import jakarta.validation.ConstraintViolation;
@@ -15,6 +16,7 @@ public class ValidatorUtil {
     @Autowired
     private Validator validator;
 
+    @Async
     public void validate(Object request) {
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(request);
         if (constraintViolations.size() > 0) {

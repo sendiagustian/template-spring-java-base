@@ -35,7 +35,7 @@ public class LogInterceptorMiddleware implements HandlerInterceptor {
         String requestURI = request.getRequestURI();
         String logServiceTrx = request.getHeader("LOG-SERVICE-TRX");
 
-        List<String> logExcludes = excludeEndpoint.getTokenExcludes();
+        List<String> logExcludes = excludeEndpoint.getLogExcludes();
         if (!logExcludes.stream().anyMatch(requestURI::startsWith)) {
             if (logServiceTrx == null || logServiceTrx.isEmpty()) {
                 throw new MissingServletRequestParameterException("LOG-SERVICE-TRX", "Header");

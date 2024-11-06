@@ -34,7 +34,9 @@ public class SwaggerConfig {
                 String allowedHost;
 
                 if ("dev".equals(activeProfile)) {
-                        allowedHost = serverProperties.getDev().getHost();
+                        // allowedHost = serverProperties.getDev().getHost();
+                        allowedHost = serverProperties.getDev().getHost() + ":"
+                                        + serverProperties.getDev().getPort();
                 } else if ("prod".equals(activeProfile)) {
                         allowedHost = serverProperties.getProd().getHost();
                 } else {

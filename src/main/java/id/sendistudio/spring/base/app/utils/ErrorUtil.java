@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ErrorUtil {
     public ErrorResponse errorNotFound(DataAccessException e) {
         log.info("Data Error : " + e.getMessage());
-        return new ErrorResponse(404, "User not found");
+        return new ErrorResponse(404, "Data not found");
     }
 
     public ErrorResponse errorData(DataAccessException e) {

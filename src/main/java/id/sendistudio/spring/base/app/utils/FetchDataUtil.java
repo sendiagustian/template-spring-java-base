@@ -6,6 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,6 +22,7 @@ public class FetchDataUtil {
     @Autowired
     TypeUtil typeUtil;
 
+    @Async
     public <T> ResponseEntity<T> request(String url, HttpMethod method, HttpHeaders headers,
             ParameterizedTypeReference<T> responseType) {
 

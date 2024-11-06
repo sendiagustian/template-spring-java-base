@@ -8,6 +8,7 @@ import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.Async;
 
 import id.sendistudio.spring.base.app.configs.properties.ServerProperties;
 
@@ -21,6 +22,7 @@ public class ServerConfig implements WebServerFactoryCustomizer<ConfigurableWebS
     ServerProperties server;
 
     @Override
+    @Async
     public void customize(ConfigurableWebServerFactory factory) {
         String activeProfile = env.getActiveProfiles().length > 0 ? env.getActiveProfiles()[0] : "local";
 
