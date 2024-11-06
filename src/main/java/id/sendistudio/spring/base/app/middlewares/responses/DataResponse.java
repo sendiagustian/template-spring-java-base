@@ -12,8 +12,4 @@ public class DataResponse<T> extends WebResponse {
         super(status);
         this.data = data;
     }
-
-    public T getData() {
-        return data;
-    }
 }

@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-@SecurityScheme(name = "LOG_SERVICE_TRX", type = SecuritySchemeType.APIKEY, in = SecuritySchemeIn.HEADER)
+@SecurityScheme(name = "LOG-SERVICE-TRX", type = SecuritySchemeType.APIKEY, in = SecuritySchemeIn.HEADER)
 public class LogInterceptorMiddleware implements HandlerInterceptor {
 
     @Autowired
@@ -33,12 +33,12 @@ public class LogInterceptorMiddleware implements HandlerInterceptor {
             @NonNull Object handler) throws Exception {
 
         String requestURI = request.getRequestURI();
-        String logServiceTrx = request.getHeader("LOG_SERVICE_TRX");
+        String logServiceTrx = request.getHeader("LOG-SERVICE-TRX");
 
         List<String> logExcludes = excludeEndpoint.getTokenExcludes();
         if (!logExcludes.stream().anyMatch(requestURI::startsWith)) {
             if (logServiceTrx == null || logServiceTrx.isEmpty()) {
-                throw new MissingServletRequestParameterException("LOG_SERVICE_TRX", "Header");
+                throw new MissingServletRequestParameterException("LOG-SERVICE-TRX", "Header");
             }
         }
 

@@ -30,7 +30,7 @@ public class FetchDataUtil {
 
         String trx = typeUtil.genereateUUID();
 
-        headers.set("LOG_SERVICE_TRX", trx);
+        headers.set("LOG-SERVICE-TRX", trx);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         return restTemplate.exchange(url, method, entity, responseType);

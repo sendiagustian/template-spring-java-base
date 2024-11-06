@@ -12,8 +12,4 @@ public class ErrorResponse extends WebResponse {
         super(status);
         this.error = error;
     }
-
-    public String getError() {
-        return error;
-    }
 }
