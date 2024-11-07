@@ -21,56 +21,53 @@
 
 // @Slf4j
 // @Component
-// @SecurityScheme(name = "X-API-TOKEN", type = SecuritySchemeType.APIKEY, in =
-// SecuritySchemeIn.HEADER)
+// @SecurityScheme(name = "X-API-TOKEN", type = SecuritySchemeType.APIKEY, in = SecuritySchemeIn.HEADER)
 // public class TokenInterceptorMiddleware implements HandlerInterceptor {
 
-// @Autowired
-// JwtTokenUtil jwt;
+//     @Autowired
+//     JwtTokenUtil jwt;
 
-// @Autowired
-// ExcludeEndpoint excludeEndpoint;
+//     @Autowired
+//     ExcludeEndpoint excludeEndpoint;
 
-// @Autowired
-// UserRepository userRepository;
+//     @Autowired
+//     UserRepository userRepository;
 
-// @Override
-// public boolean preHandle(@NonNull HttpServletRequest request, @NonNull
-// HttpServletResponse response,
-// @NonNull Object handler) throws Exception {
+//     @Override
+//     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+//             @NonNull Object handler) throws Exception {
 
-// String requestURI = request.getRequestURI();
-// String tokenHeader = request.getHeader("X-API-TOKEN");
+//         String requestURI = request.getRequestURI();
+//         String tokenHeader = request.getHeader("X-API-TOKEN");
 
-// List<String> tokenExcludes = excludeEndpoint.getTokenExcludes();
-// if (!tokenExcludes.stream().anyMatch(requestURI::startsWith)) {
-// if (tokenHeader == null || tokenHeader.isEmpty()) {
-// throw new MissingServletRequestParameterException("X-API-TOKEN", "Header");
-// }
+//         List<String> tokenExcludes = excludeEndpoint.getTokenExcludes();
+//         if (!tokenExcludes.stream().anyMatch(requestURI::startsWith)) {
+//             if (tokenHeader == null || tokenHeader.isEmpty()) {
+//                 throw new MissingServletRequestParameterException("X-API-TOKEN", "Header");
+//             }
 
-// String username = jwt.extractClaim(tokenHeader, claims -> claims.get("sub",
-// String.class)).orElse(null);
+//             String username = jwt.extractClaim(tokenHeader, claims -> claims.get("sub", String.class)).orElse(null);
 
-// if (username == null) {
-// throw new Exception("Unauthorized");
-// } else {
+//             if (username == null) {
+//                 throw new Exception("Unauthorized");
+//             } else {
 
-// Boolean tokenExpired = jwt.isTokenExpired(tokenHeader);
+//                 Boolean tokenExpired = jwt.isTokenExpired(tokenHeader);
 
-// if (tokenExpired) {
-// throw new Exception("Token Expired");
-// } else {
-// UserView user = userRepository.getByToken(tokenHeader).orElse(null);
+//                 if (tokenExpired) {
+//                     throw new Exception("Token Expired");
+//                 } else {
+//                     UserView user = userRepository.getByToken(tokenHeader).orElse(null);
 
-// if (user == null) {
-// throw new Exception("Token Header not valid or user not found");
-// }
-// }
+//                     if (user == null) {
+//                         throw new Exception("Token Header not valid or user not found");
+//                     }
+//                 }
 
-// }
+//             }
 
-// }
+//         }
 
-// return true;
-// }
+//         return true;
+//     }
 // }
