@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import id.sendistudio.spring.base.app.middlewares.LogInterceptorMiddleware;
-import id.sendistudio.spring.base.app.middlewares.TokenInterceptorMiddleware;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -19,8 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     LogInterceptorMiddleware logInterceptorMiddleware;
 
-    @Autowired
-    TokenInterceptorMiddleware tokenInterceptorMiddleware;
+    // @Autowired
+    // TokenInterceptorMiddleware tokenInterceptorMiddleware;
 
     @Bean
     RestTemplate restTemplate() {
@@ -37,6 +36,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(@NonNull InterceptorRegistry registry) {
         // Daftarkan interceptor ke semua request API
         registry.addInterceptor(logInterceptorMiddleware).addPathPatterns("/api/**");
-        registry.addInterceptor(tokenInterceptorMiddleware).addPathPatterns("/api/**");
+        // registry.addInterceptor(tokenInterceptorMiddleware).addPathPatterns("/api/**");
     }
 }

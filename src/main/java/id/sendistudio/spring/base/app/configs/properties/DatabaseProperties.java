@@ -36,6 +36,12 @@ public class DatabaseProperties {
     @Setter
     public static class Local {
         @NotBlank
+        private String redisHost;
+
+        @NotBlank
+        private String redisPort;
+
+        @NotBlank
         private String host;
 
         @NotBlank
@@ -54,6 +60,11 @@ public class DatabaseProperties {
     @Getter
     @Setter
     public static class Dev {
+        @NotBlank
+        private String redisHost;
+
+        @NotBlank
+        private String redisPort;
 
         @NotBlank
         private String host;
@@ -74,6 +85,11 @@ public class DatabaseProperties {
     @Getter
     @Setter
     public static class Prod {
+        @NotBlank
+        private String redisHost;
+
+        @NotBlank
+        private String redisPort;
 
         @NotBlank
         private String host;

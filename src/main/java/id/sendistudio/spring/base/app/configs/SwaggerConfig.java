@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import id.sendistudio.spring.base.app.configs.properties.AppProperties;
 import id.sendistudio.spring.base.app.configs.properties.ServerProperties;
@@ -26,6 +29,11 @@ public class SwaggerConfig {
 
         @Autowired
         ServerProperties serverProperties;
+
+        @Bean
+        MappingJackson2HttpMessageConverter customJackson2HttpMessageConverter(ObjectMapper objectMapper) {
+                return new MappingJackson2HttpMessageConverter(objectMapper);
+        }
 
         @Bean
         OpenAPI customOpenAPI() {
