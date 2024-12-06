@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -35,19 +36,23 @@ public class RedisConfig {
         DatabaseProperties.Dev dev = databaseProperties.getDev();
         DatabaseProperties.Prod prod = databaseProperties.getProd();
 
+        RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
+
         if (profile.equals("dev")) {
-            LettuceConnectionFactory factory = new LettuceConnectionFactory(dev.getRedisHost(),
-                    Integer.parseInt(dev.getRedisPort()));
-            return factory;
+            redisConfig.setHostName(dev.getRedisHost());
+            redisConfig.setPort(Integer.parseInt(dev.getRedisPort()));
+            redisConfig.setPassword(dev.getRedisPass());
         } else if (profile.equals("prod")) {
-            LettuceConnectionFactory factory = new LettuceConnectionFactory(prod.getRedisHost(),
-                    Integer.parseInt(prod.getRedisPort()));
-            return factory;
+            redisConfig.setHostName(prod.getRedisHost());
+            redisConfig.setPort(Integer.parseInt(prod.getRedisPort()));
+            redisConfig.setPassword(prod.getRedisPass());
         } else {
-            LettuceConnectionFactory factory = new LettuceConnectionFactory(local.getRedisHost(),
-                    Integer.parseInt(local.getRedisPort()));
-            return factory;
+            redisConfig.setHostName(local.getRedisHost());
+            redisConfig.setPort(Integer.parseInt(local.getRedisPort()));
+            redisConfig.setPassword(local.getRedisPass());
         }
+
+        return new LettuceConnectionFactory(redisConfig);
 
     }
 

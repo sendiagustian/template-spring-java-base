@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import id.sendistudio.spring.base.app.configs.properties.AppProperties;
 import id.sendistudio.spring.base.app.configs.properties.DatabaseProperties;
@@ -22,7 +22,7 @@ public class DatabasePropertiesTest {
     @Autowired
     private DatabaseProperties database;
 
-    @MockBean
+    @MockitoBean
     private DataSource dataSource;
 
     @Test

@@ -1,4 +1,4 @@
-package id.sendistudio.spring.base.app.middlewares.responses;
+package id.sendistudio.spring.base.data.responses;
 
 import id.sendistudio.spring.base.data.views.PagingView;
 import lombok.AllArgsConstructor;

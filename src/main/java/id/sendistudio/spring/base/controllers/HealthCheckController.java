@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import id.sendistudio.spring.base.app.middlewares.responses.WebResponse;
+import id.sendistudio.spring.base.data.responses.WebResponse;
 import id.sendistudio.spring.base.services.HealthCheckService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 

@@ -7,9 +7,9 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import id.sendistudio.spring.base.app.middlewares.responses.DataResponse;
-import id.sendistudio.spring.base.app.middlewares.responses.ErrorResponse;
-import id.sendistudio.spring.base.app.middlewares.responses.WebResponse;
+import id.sendistudio.spring.base.data.responses.DataResponse;
+import id.sendistudio.spring.base.data.responses.ErrorResponse;
+import id.sendistudio.spring.base.data.responses.WebResponse;
 import id.sendistudio.spring.base.services.HealthCheckService;
 
 @Service

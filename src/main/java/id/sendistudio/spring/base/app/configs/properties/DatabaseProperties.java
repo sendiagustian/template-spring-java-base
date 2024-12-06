@@ -42,6 +42,9 @@ public class DatabaseProperties {
         private String redisPort;
 
         @NotBlank
+        private String redisPass;
+
+        @NotBlank
         private String host;
 
         @NotBlank
@@ -67,6 +70,9 @@ public class DatabaseProperties {
         private String redisPort;
 
         @NotBlank
+        private String redisPass;
+
+        @NotBlank
         private String host;
 
         @NotBlank
@@ -90,6 +96,9 @@ public class DatabaseProperties {
 
         @NotBlank
         private String redisPort;
+
+        @NotBlank
+        private String redisPass;
 
         @NotBlank
         private String host;
