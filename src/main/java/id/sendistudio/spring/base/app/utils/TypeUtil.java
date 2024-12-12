@@ -37,22 +37,22 @@ public class TypeUtil {
     @AllArgsConstructor
     public static class StringRowMapper implements RowMapper<String> {
 
-        private String name;
+        private String columnName;
 
         @Override
         public String mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
-            return rs.getString(name);
+            return rs.getString(columnName);
         }
     }
 
     @AllArgsConstructor
     public static class IntegerRowMapper implements RowMapper<Integer> {
 
-        private String name;
+        private String columnName;
 
         @Override
         public Integer mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
-            return rs.getInt(name);
+            return rs.getInt(columnName);
         }
     }
 

@@ -10,17 +10,36 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class ErrorUtil {
     public ErrorResponse errorNotFound(DataAccessException e) {
-        log.info("Data Error : " + e.getMessage());
+        log.info("Data not found Error : " + e.getMessage());
         return new ErrorResponse(404, "Data not found");
     }
 
     public ErrorResponse errorData(DataAccessException e) {
         log.info("Data Error : " + e.getMessage());
-        return new ErrorResponse(500, "Data error: " + e.getMessage());
+        String safeMessage = "Data error: " + extractSafeMessage(e.getMessage());
+        return new ErrorResponse(500, safeMessage);
     }
 
     public ErrorResponse errorServer(Exception e) {
-        log.info("Data Error : " + e.getMessage());
-        return new ErrorResponse(500, "Data error: " + e.getMessage());
+        log.info("Server Error : " + e.getMessage());
+        return new ErrorResponse(500, "Server error: " + e.getMessage());
+    }
+
+    private String extractSafeMessage(String message) {
+        if (message.contains("Duplicate entry")) {
+            return "Duplicate data entry.";
+        } else if (message.contains("bad SQL grammar")) {
+            return "Query grammer invalid operation.";
+        } else if (message.contains("Parameter index out of range")) {
+            return "Invalid parameters for data operation.";
+        } else if (message.contains("cannot be null")) {
+            return "Invalid data: Required field is missing.";
+        } else if (message.contains("Data truncated")) {
+            return "Invalid data: Field value is out of range or invalid.";
+        } else if (message.contains("foreign key constraint fails")) {
+            return "Invalid reference: Related data is missing or invalid.";
+        }
+
+        return message;
     }
 }
