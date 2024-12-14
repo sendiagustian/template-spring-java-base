@@ -33,7 +33,6 @@ public class QueryUtil {
 
     // Generic method to execute an insert/update/delete operation
     public int exec(String sql, Object... args) {
-        // List<Object> filteredArgs = Arrays.stream(args).filter(Objects::nonNull).collect(Collectors.toList());
         return jdbcTemplate.update(sql, args);
     }
 
