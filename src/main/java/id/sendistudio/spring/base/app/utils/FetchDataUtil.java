@@ -1,102 +1,62 @@
 package id.sendistudio.spring.base.app.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import id.sendistudio.spring.base.data.requests.FetchRequest;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component
 @AllArgsConstructor
 public class FetchDataUtil {
 
-    @Autowired
     private final RestTemplate restTemplate;
 
     /**
-     * Method utama untuk melakukan request ke endpoint.
-     * 
-     * @param url          URL tujuan
-     * @param method       HTTP Method (GET, POST, PUT, DELETE, etc.)
-     * @param headers      Header request
-     * @param body         Body request (null jika tidak diperlukan)
-     * @param responseType Tipe data respons
-     * @param <T>          Jenis respons yang diharapkan
-     * @return ResponseEntity<T> berisi respons dari endpoint
+     * Metode utilitas utama untuk melakukan HTTP request generik.
+     *
+     * @param request      FetchRequest dengan semua parameter request.
+     * @param responseType Tipe generik response.
+     * @param <T>          Tipe respons.
+     * @param <R>          Tipe request body.
+     * @return ResponseEntity dengan respons.
      */
-    public <T> ResponseEntity<T> request(String url, HttpMethod method, HttpHeaders headers, Object body,
-            ParameterizedTypeReference<T> responseType) {
-        try {
-            // Pastikan headers tidak null
-            if (headers == null) {
-                headers = new HttpHeaders();
-            }
-
-            // Log request untuk debugging
-            log.info("Sending {} request to URL: {}", method, url);
-
-            // Buat HttpEntity dengan body dan headers
-            HttpEntity<Object> entity = new HttpEntity<>(body, headers);
-
-            // Kirim request dan kembalikan respons
-            return restTemplate.exchange(url, method, entity, responseType);
-        } catch (RestClientException ex) {
-            // Tangani error dan log
-            log.error("Error during REST call to URL: {}", url, ex);
-            throw ex; // Rethrow jika ingin ditangani di tempat lain
+    public <R> ResponseEntity<Map<String, Object>> sendRequestObject(FetchRequest<R> request) {
+        // Inisialisasi header kosong jika null
+        HttpHeaders httpHeaders = new HttpHeaders();
+        if (request.getHeaders() != null) {
+            request.getHeaders().forEach(httpHeaders::set);
         }
+
+        // Siapkan HttpEntity dengan body (bisa null)
+        HttpEntity<R> entity = new HttpEntity<>(request.getBody(), httpHeaders);
+
+        // Mengirim request menggunakan RestTemplate
+        return restTemplate.exchange(request.getUrl(), request.getMethod(), entity,
+                new ParameterizedTypeReference<Map<String, Object>>() {
+                });
     }
 
-    /**
-     * Overload method untuk GET dengan body.
-     */
-    public <T> ResponseEntity<T> get(String url, HttpHeaders headers, Object body,
-            ParameterizedTypeReference<T> responseType) {
-        return request(url, HttpMethod.GET, headers, body, responseType);
-    }
+    public <R> ResponseEntity<List<Object>> sendRequestList(FetchRequest<R> request) {
+        // Inisialisasi header kosong jika null
+        HttpHeaders httpHeaders = new HttpHeaders();
+        if (request.getHeaders() != null) {
+            request.getHeaders().forEach(httpHeaders::set);
+        }
 
-    /**
-     * Overload method untuk GET tanpa body.
-     */
-    public <T> ResponseEntity<T> get(String url, HttpHeaders headers, ParameterizedTypeReference<T> responseType) {
-        return request(url, HttpMethod.GET, headers, null, responseType);
-    }
+        // Siapkan HttpEntity dengan body (bisa null)
+        HttpEntity<R> entity = new HttpEntity<>(request.getBody(), httpHeaders);
 
-    /**
-     * Overload method untuk GET tanpa body dan headers.
-     */
-    public <T> ResponseEntity<T> get(String url, ParameterizedTypeReference<T> responseType) {
-        return request(url, HttpMethod.GET, null, null, responseType);
-    }
-
-    /**
-     * Overload method untuk POST.
-     */
-    public <T> ResponseEntity<T> post(String url, HttpHeaders headers, Object body,
-            ParameterizedTypeReference<T> responseType) {
-        return request(url, HttpMethod.POST, headers, body, responseType);
-    }
-
-    /**
-     * Overload method untuk PUT.
-     */
-    public <T> ResponseEntity<T> put(String url, HttpHeaders headers, Object body,
-            ParameterizedTypeReference<T> responseType) {
-        return request(url, HttpMethod.PUT, headers, body, responseType);
-    }
-
-    /**
-     * Overload method untuk DELETE.
-     */
-    public <T> ResponseEntity<T> delete(String url, HttpHeaders headers, ParameterizedTypeReference<T> responseType) {
-        return request(url, HttpMethod.DELETE, headers, null, responseType);
+        // Mengirim request menggunakan RestTemplate
+        return restTemplate.exchange(request.getUrl(), request.getMethod(), entity,
+                new ParameterizedTypeReference<List<Object>>() {
+                });
     }
 }

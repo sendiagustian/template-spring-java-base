@@ -5,16 +5,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.AllArgsConstructor;
 
 @Component
 public class TypeUtil {
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public String genereateUUID() {
         return UUID.randomUUID().toString().replaceAll("-", "");
@@ -64,6 +71,29 @@ public class TypeUtil {
             throw new IllegalArgumentException("Page not found");
         }
         return offset;
+    }
+
+    public Boolean isTokenExpired(BigInteger expiredAt) {
+        BigInteger now = BigInteger.valueOf(System.currentTimeMillis());
+        return now.compareTo(expiredAt) > 0;
+    }
+    
+    public <T> T mapToModel(Map<String, Object> map, Class<T> clazz) {
+        try {
+            return objectMapper.convertValue(map, clazz);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Error mapping map to model: " + clazz.getSimpleName(), e);
+        }
+    }
+
+    public <T> T mapToModel(Map<String, Object> map, ParameterizedTypeReference<T> typeReference) {
+        try {
+            JavaType javaType = objectMapper.getTypeFactory().constructType(typeReference.getType());
+            return objectMapper.convertValue(map, javaType);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+            throw new RuntimeException("Error mapping map ParameterizedTypeReference to model", e);
+        }
     }
 
     @AllArgsConstructor
