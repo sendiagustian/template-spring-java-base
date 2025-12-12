@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.jdbc.core.RowMapper;
@@ -29,7 +30,7 @@ public class TypeUtil {
     public String generateOTP(Integer digit) {
         String otp = "";
         for (int i = 0; i < digit; i++) {
-            otp += (int) (Math.random() * 10);
+            otp += (int) (ThreadLocalRandom.current().nextDouble() * 10);
         }
         return otp;
     }
