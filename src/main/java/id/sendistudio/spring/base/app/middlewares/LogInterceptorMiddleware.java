@@ -3,7 +3,6 @@ package id.sendistudio.spring.base.app.middlewares;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -29,8 +28,8 @@ public class LogInterceptorMiddleware implements HandlerInterceptor {
     JwtTokenUtil jwt;
 
     @Override
-    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-            @NonNull Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+            Object handler) throws Exception {
 
         String requestURI = request.getRequestURI();
         String logServiceTrx = request.getHeader("LOG-SERVICE-TRX");

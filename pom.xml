@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.0</version>
+		<version>4.0.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>id.sendistudio.spring.base</groupId>
@@ -81,7 +81,7 @@
 		<dependency>
 			<groupId>com.github.ulisesbocchio</groupId>
 			<artifactId>jasypt-spring-boot-starter</artifactId>
-			<version>3.0.4</version>
+			<version>3.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -91,13 +91,13 @@
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-impl</artifactId>
-			<version>0.11.5</version>
+			<version>0.13.0</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson if you prefer using gson -->
-			<version>0.11.5</version>
+			<version>0.13.0</version>
 		</dependency>
 		<!-- JWT, VALIDATION AND SECURITY END -->
 		<!-- DATABASE DEPENDENCY START -->
@@ -112,7 +112,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.30</version>
+			<version>8.0.33</version>
 			<scope>runtime</scope>
 		</dependency>
 		<!-- REDIS -->
@@ -123,7 +123,6 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.14.2</version>
 		</dependency>
 		<!-- DATABASE DEPENDENCY END -->
 		<!-- SWAGGER START -->
@@ -134,7 +133,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.6.0</version>
+			<version>3.0.0</version>
 		</dependency>
 		<!-- SWAGGER END -->
 	</dependencies>

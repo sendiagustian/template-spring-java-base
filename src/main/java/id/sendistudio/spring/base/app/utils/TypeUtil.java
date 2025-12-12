@@ -10,7 +10,6 @@ import java.util.UUID;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JavaType;
@@ -77,7 +76,7 @@ public class TypeUtil {
         BigInteger now = BigInteger.valueOf(System.currentTimeMillis());
         return now.compareTo(expiredAt) > 0;
     }
-    
+
     public <T> T mapToModel(Map<String, Object> map, Class<T> clazz) {
         try {
             return objectMapper.convertValue(map, clazz);
@@ -102,7 +101,7 @@ public class TypeUtil {
         private String columnName;
 
         @Override
-        public String mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
+        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
             return rs.getString(columnName);
         }
     }
@@ -113,7 +112,7 @@ public class TypeUtil {
         private String columnName;
 
         @Override
-        public Integer mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
+        public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
             return rs.getInt(columnName);
         }
     }

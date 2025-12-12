@@ -1,5 +1,7 @@
 package id.sendistudio.spring.base.app.configs;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -12,9 +14,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 import id.sendistudio.spring.base.app.configs.properties.DatabaseProperties;
 
@@ -39,15 +40,15 @@ public class RedisConfig {
         RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
 
         if (profile.equals("dev")) {
-            redisConfig.setHostName(dev.getRedisHost());
-            redisConfig.setPort(Integer.parseInt(dev.getRedisPort()));
+            redisConfig.setHostName(Objects.requireNonNull(dev.getRedisHost()));
+            redisConfig.setPort(Integer.parseInt(Objects.requireNonNull(dev.getRedisPort())));
             redisConfig.setPassword(dev.getRedisPass());
         } else if (profile.equals("prod")) {
-            redisConfig.setHostName(prod.getRedisHost());
-            redisConfig.setPort(Integer.parseInt(prod.getRedisPort()));
+            redisConfig.setHostName(Objects.requireNonNull(prod.getRedisHost()));
+            redisConfig.setPort(Integer.parseInt(Objects.requireNonNull(prod.getRedisPort())));
             redisConfig.setPassword(prod.getRedisPass());
         } else {
-            redisConfig.setHostName(local.getRedisHost());
+            redisConfig.setHostName(Objects.requireNonNull(local.getRedisHost()));
             redisConfig.setPort(Integer.parseInt(local.getRedisPort()));
             redisConfig.setPassword(local.getRedisPass());
         }
@@ -62,10 +63,10 @@ public class RedisConfig {
         template.setConnectionFactory(connectionFactory);
 
         // Gunakan serializer untuk kunci dan nilai
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setKeySerializer(RedisSerializer.string());
+        template.setValueSerializer(RedisSerializer.json());
+        template.setHashKeySerializer(RedisSerializer.string());
+        template.setHashValueSerializer(RedisSerializer.json());
 
         template.afterPropertiesSet();
         return template;
@@ -75,9 +76,9 @@ public class RedisConfig {
     CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair
-                        .fromSerializer(new GenericJackson2JsonRedisSerializer()));
+                        .fromSerializer(RedisSerializer.json()));
 
-        return RedisCacheManager.builder(redisConnectionFactory)
+        return RedisCacheManager.builder(Objects.requireNonNull(redisConnectionFactory))
                 .cacheDefaults(config)
                 .build();
     }

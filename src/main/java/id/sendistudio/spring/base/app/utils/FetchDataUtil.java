@@ -2,6 +2,7 @@ package id.sendistudio.spring.base.app.utils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -39,7 +40,8 @@ public class FetchDataUtil {
         HttpEntity<R> entity = new HttpEntity<>(request.getBody(), httpHeaders);
 
         // Mengirim request menggunakan RestTemplate
-        return restTemplate.exchange(request.getUrl(), request.getMethod(), entity,
+        return restTemplate.exchange(Objects.requireNonNull(request.getUrl()),
+                Objects.requireNonNull(request.getMethod()), entity,
                 new ParameterizedTypeReference<Map<String, Object>>() {
                 });
     }
@@ -55,7 +57,8 @@ public class FetchDataUtil {
         HttpEntity<R> entity = new HttpEntity<>(request.getBody(), httpHeaders);
 
         // Mengirim request menggunakan RestTemplate
-        return restTemplate.exchange(request.getUrl(), request.getMethod(), entity,
+        return restTemplate.exchange(Objects.requireNonNull(request.getUrl()),
+                Objects.requireNonNull(request.getMethod()), entity,
                 new ParameterizedTypeReference<List<Object>>() {
                 });
     }
